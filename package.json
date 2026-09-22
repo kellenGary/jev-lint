@@ -1,0 +1,79 @@
+{
+  "name": "jev-linter",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "./dist/extension.cjs",
+  "bin": {
+    "jev-lint": "./dist/src/index.js"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters"
+  ],
+  "activationEvents": [
+    "onLanguage:typescript",
+    "onLanguage:javascript"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "jev-lint.lintCurrentFile",
+        "title": "Jev Lint: Check Current File"
+      },
+      {
+        "command": "jev-lint.setApiKey",
+        "title": "Jev Lint: Set TypeSafe API Key"
+      }
+    ],
+    "configuration": {
+      "title": "Jev Lint",
+      "properties": {
+        "jevLint.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "TypeSafe AI API Key (can also be set in .env or via TYPESAFE_API_KEY environment variable)",
+          "scope": "application"
+        },
+        "jevLint.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Jev semantic background linting"
+        },
+        "jevLint.threshold": {
+          "type": "number",
+          "default": 0.85,
+          "description": "Confidence threshold for flagging violations"
+        },
+        "jevLint.autoCreateRules": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically bootstrap .jev-rules/patterns.md in workspaces"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "dev": "tsx client.ts",
+    "jev-lint": "tsx src/index.ts",
+    "build": "tsc && npm run bundle:ext",
+    "bundle:ext": "esbuild src/extension.ts --bundle --outfile=dist/extension.cjs --external:vscode --format=cjs --platform=node"
+  },
+  "dependencies": {
+    "@typesafe-ai/sdk": "^0.6.0",
+    "commander": "^15.0.0",
+    "dotenv": "^18.0.2",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.28.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
