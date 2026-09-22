@@ -181,8 +181,3 @@ npx tsc --noEmit
 TYPESAFE_MOCK=1 node dist/src/index.js src/index.ts
 ```
 
----
-
-## License
-
-MIT © 2026
